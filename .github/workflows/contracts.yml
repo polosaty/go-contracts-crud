@@ -5,8 +5,8 @@ on:
   pull_request:
   push:
     branches:
-      - main
       - master
+      - main
 
 jobs:
 
@@ -19,7 +19,7 @@ jobs:
         image: postgres
         env:
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: praktikum
+          POSTGRES_DB: contracts
         options: >-
           --health-cmd pg_isready
           --health-interval 5s
@@ -27,6 +27,9 @@ jobs:
           --health-retries 5
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
 #      - name: Prepare binaries
 #        run: |
 #          (cd cmd/ && go build -o contracts)

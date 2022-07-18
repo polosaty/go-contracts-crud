@@ -25,9 +25,18 @@ func NewMainHandler(repository storage.Repository) *chi.Mux {
 			r.Get("/{id}", h.readCompany())
 			r.Get("/", h.readCompanyList())
 			r.Post("/{id}", h.updateCompany())
-			r.Delete("/", h.deleteCompany())
+			r.Delete("/{id}", h.deleteCompany())
 		})
-
+		r.Route("/contract", func(r chi.Router) {
+			r.Post("/", h.createContract())
+			r.Get("/{id}", h.readContract())
+			r.Get("/", h.readContractList())
+			r.Post("/{id}", h.updateContract())
+			r.Delete("/{id}", h.deleteContract())
+		})
+		r.Route("/buy", func(r chi.Router) {
+			r.Post("/", h.createBuy())
+		})
 	})
 
 	return h.chiMux

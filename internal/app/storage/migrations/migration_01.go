@@ -39,8 +39,8 @@ create table if not exists contract (
     sum             numeric(10, 2) not null
 );
 
-create unique index if not exists contract_id_uindex
-    on contract(id);
+create unique index contract_trader_id_buyer_id_number_uindex
+    on contract(trader_id, buyer_id, number);
 
 create table if not exists buy (
     id          bigserial
@@ -50,15 +50,12 @@ create table if not exists buy (
         constraint buy_contract_id_fk
             references contract
             on delete cascade,
-    timespamp   timestamp with time zone not null,
+    timestamp   timestamp with time zone not null,
     sum         numeric(10, 2)           not null
 );
 
-create table if not exists revision (
-    version bigserial
-        constraint revision_version_pk
-            primary key
-);
+create unique index if not exists buy_contract_id_timestamp_uindex
+    on buy(contract_id asc, timestamp desc);
 
 
 INSERT INTO revision VALUES(1);  
