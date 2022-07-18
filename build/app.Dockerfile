@@ -7,7 +7,7 @@ COPY go.sum ./
 RUN go mod download
 COPY ./ ./
 
-RUN CGO_ENABLED=0 go build -o /docker-app cmd/main.go
+RUN CGO_ENABLED=0 go build -o /docker-app cmd/contracts/main.go
 
 ARG UID=1000
 

@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func Serve(addr string, accrualSystemAddress string, db storage.Repository) error {
+func Serve(addr string, db storage.Repository) error {
 	handler := handlers.NewMainHandler(db)
 
 	server := &http.Server{

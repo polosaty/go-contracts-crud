@@ -19,15 +19,24 @@ func NewMainHandler(repository storage.Repository) *chi.Mux {
 	h.chiMux.Use(middleware.Logger)
 	h.chiMux.Use(middleware.Recoverer)
 
-	h.chiMux.Route("/api/", func(r chi.Router) {
-
-		//r.Post("/orders", h.postOrder())
-		//r.Get("/orders", h.getOrders())
-		//r.Route("/balance", func(r chi.Router) {
-		//	r.Get("/", h.getBalance())
-		//	r.Post("/withdraw", h.postWithdrawal())
-		//	r.Get("/withdraws", h.getWithdraws())
-		//})
+	h.chiMux.Route("/api", func(r chi.Router) {
+		r.Route("/company", func(r chi.Router) {
+			r.Post("/", h.createCompany())
+			r.Get("/{id}", h.readCompany())
+			r.Get("/", h.readCompanyList())
+			r.Post("/{id}", h.updateCompany())
+			r.Delete("/{id}", h.deleteCompany())
+		})
+		r.Route("/contract", func(r chi.Router) {
+			r.Post("/", h.createContract())
+			r.Get("/{id}", h.readContract())
+			r.Get("/", h.readContractList())
+			r.Post("/{id}", h.updateContract())
+			r.Delete("/{id}", h.deleteContract())
+		})
+		r.Route("/buy", func(r chi.Router) {
+			r.Post("/", h.createBuy())
+		})
 	})
 
 	return h.chiMux
